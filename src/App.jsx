@@ -1,8 +1,14 @@
 import React from 'react';
 import './App.css';
+import 'antd/dist/antd.css';
+import Navbar from './components/Navbar';
 
 function App() {
-  return <div className="App">eloo</div>;
+  return (
+    <div className="App">
+      <Navbar />
+    </div>
+  );
 }
 
 export default App;
