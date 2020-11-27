@@ -1,29 +1,35 @@
-import React from 'react';
-import { PageHeader, Input } from 'antd';
+import React, { useState } from 'react';
+import { Input, Button } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
-import messages from '../../messages';
+import PropTypes from 'prop-types';
+// import messages from '../../messages';
 
-const { Search } = Input;
+import './index.scss';
 
-const SearchBar = () => (
-  <Search
-    placeholder={messages.searchPlaceholder}
-    allowClear
-    enterButton="Search"
-    size="large"
-  />
-);
+const Navbar = ({ handleSearch }) => {
+  const [input, setInput] = useState('');
+  // const [repos, setRepos] = useState([]);
+  // const [totalPages, setTotalPages] = useState(1);
 
-const Navbar = () => {
+  const onInputChange = (e) => {
+    setInput(e.target.value);
+  };
+
   return (
-    <div className="site-page-header-ghost-wrapper">
-      <PageHeader
-        ghost={false}
-        title={<GithubOutlined />}
-        subTitle={<SearchBar />}
-      />
+    <div className="navbar">
+      <GithubOutlined />
+      <Input onChange={(e) => onInputChange(e)} />
+      <Button onClick={() => handleSearch(1, input)}>Go</Button>
     </div>
   );
+};
+
+Navbar.defaultProps = {
+  handleSearch: () => null,
+};
+
+Navbar.propTypes = {
+  handleSearch: PropTypes.func,
 };
 
 export default Navbar;
