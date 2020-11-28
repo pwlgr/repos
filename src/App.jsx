@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Skeleton } from 'antd';
 
 import Navbar from './components/Navbar';
 import Repos from './components/Repos';
+import Pagination from './components/Pagination';
 
 import messages from './messages';
 
 import './App.css';
 import 'antd/dist/antd.css';
+import { AppContext } from './providers';
+import { getRepos, getReposSuccess, getReposError } from './actions';
 
 const URL = 'https://api.github.com/search/repositories';
 
@@ -18,35 +21,36 @@ const fetchRepos = async (repo, page) => {
 };
 
 function App() {
-  const [repos, setRepos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const { state, dispatch } = useContext(AppContext);
 
   const handleSearch = async (currentPage = 1, input) => {
-    setLoading(true);
+    dispatch(getRepos(currentPage, input));
 
     try {
       const response = await fetchRepos(input, currentPage);
       if (response.total_count) {
-        setRepos(response.items);
-        setError('');
+        dispatch(getReposSuccess(response.items, response.total_count));
       } else {
-        setError(messages.noData);
+        dispatch(getReposError(response.message || messages.noData));
       }
     } catch (e) {
-      setError(messages.error);
+      dispatch(getReposError(messages.error));
     }
-    setLoading(false);
   };
 
   return (
     <div className="App">
       <Navbar handleSearch={handleSearch} />
-      {loading ? (
+      {state.repos.loading ? (
         <Skeleton paragraph={{ rows: 10 }} />
       ) : (
-        <Repos repos={repos} error={error} />
+        <Repos repos={state.repos.data} error={state.repos.error} />
       )}
+      <Pagination
+        totalCount={state.repos.totalCount}
+        updatePage={handleSearch}
+        param={state.query}
+      />
     </div>
   );
 }
