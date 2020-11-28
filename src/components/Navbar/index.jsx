@@ -22,7 +22,9 @@ const Navbar = React.memo(({ handleSearch }) => {
         onChange={onInputChange}
         placeholder={messages.searchPlaceholder}
       />
-      <Button onClick={() => handleSearch(1, input)}>{messages.search}</Button>
+      <Button onClick={() => (input ? handleSearch(1, input) : null)}>
+        {messages.search}
+      </Button>
     </div>
   );
 });
