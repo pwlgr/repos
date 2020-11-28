@@ -3,6 +3,7 @@ import { Input, Button } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 
+import messages from '../../messages';
 import './index.scss';
 
 const Navbar = React.memo(({ handleSearch }) => {
@@ -14,9 +15,14 @@ const Navbar = React.memo(({ handleSearch }) => {
 
   return (
     <div className="navbar">
-      <GithubOutlined />
-      <Input onChange={(e) => onInputChange(e)} />
-      <Button onClick={() => handleSearch(1, input)}>Go</Button>
+      <div className="navbar-logo">
+        <GithubOutlined />
+      </div>
+      <Input
+        onChange={onInputChange}
+        placeholder={messages.searchPlaceholder}
+      />
+      <Button onClick={() => handleSearch(1, input)}>{messages.search}</Button>
     </div>
   );
 });
