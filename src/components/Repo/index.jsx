@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Button } from 'antd';
+import { List, Avatar, Button } from 'antd';
 
-const Repo = ({ name, owner, handleClick }) => {
+const Repo = ({ name, owner, handleClick, avatar, stars, language }) => {
   return (
-    <>
-      <Card extra={<Button onClick={handleClick}>More</Button>} title={name}>
-        <p>{owner}</p>
-        <p>Card content</p>
-        <p>Card content</p>
-      </Card>
-    </>
+    <List.Item actions={[<Button onClick={handleClick}>More</Button>]}>
+      <List.Item.Meta
+        avatar={<Avatar src={avatar} />}
+        title={name}
+        description={`${owner}/${language}/${stars}`}
+      />
+    </List.Item>
   );
 };
 
@@ -18,12 +18,18 @@ Repo.defaultProps = {
   name: '',
   owner: '',
   handleClick: () => null,
+  avatar: '',
+  stars: PropTypes.string,
+  language: PropTypes.string,
 };
 
 Repo.propTypes = {
   name: PropTypes.string,
   owner: PropTypes.string,
   handleClick: PropTypes.func,
+  avatar: PropTypes.string,
+  stars: PropTypes.number,
+  language: PropTypes.string,
 };
 
 export default Repo;

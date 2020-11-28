@@ -7,6 +7,18 @@ import Repo from '../Repo';
 import './index.scss';
 import RepoDetails from '../RepoDetails';
 
+const showCardInGrid = (repo, toggleModal) => (
+  <Repo
+    key={repo.id}
+    owner={repo.owner.login}
+    name={repo.name}
+    handleClick={() => toggleModal(repo)}
+    avatar={repo.owner.avatar_url}
+    stars={repo.stargazers_count}
+    language={repo.language}
+  />
+);
+
 const Repos = ({ repos, error }) => {
   const [modal, setModal] = useState(false);
   const [activeRepo, setActiveRepo] = useState(null);
@@ -22,10 +34,11 @@ const Repos = ({ repos, error }) => {
     }
     return (
       !!repos.length &&
-      !error &&
-      repos.map((e) => (
-        <Repo name={e.name} handleClick={() => toggleModal(e)} />
-      ))
+      !error && (
+        <div className="repos-container">
+          {repos.map((e) => showCardInGrid(e, toggleModal))}
+        </div>
+      )
     );
   };
 

@@ -1,4 +1,11 @@
 .repos {
   margin-top: 60px;
   z-index: 1;
+  &-container {
+    width: 60%;
+    margin: 0 auto;
+    @media (max-width: 768px) {
+      width: 90%;
+    }
+  }
 }

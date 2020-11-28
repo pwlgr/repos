@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Skeleton } from 'antd';
 
 import Navbar from './components/Navbar';
@@ -7,7 +7,7 @@ import Pagination from './components/Pagination';
 
 import messages from './messages';
 
-import './App.css';
+import './App.scss';
 import 'antd/dist/antd.css';
 import { AppContext } from './providers';
 import { getRepos, getReposSuccess, getReposError } from './actions';
@@ -22,10 +22,11 @@ const fetchRepos = async (repo, page) => {
 
 function App() {
   const { state, dispatch } = useContext(AppContext);
+  const [welcome, setWelcome] = useState(true);
 
   const handleSearch = async (currentPage = 1, input) => {
     dispatch(getRepos(currentPage, input));
-
+    if (welcome) setWelcome(false);
     try {
       const response = await fetchRepos(input, currentPage);
       if (response.total_count) {
@@ -41,16 +42,19 @@ function App() {
   return (
     <div className="App">
       <Navbar handleSearch={handleSearch} />
+      {welcome && <h1 className="welcome">Welcome!</h1>}
       {state.repos.loading ? (
         <Skeleton paragraph={{ rows: 10 }} />
       ) : (
         <Repos repos={state.repos.data} error={state.repos.error} />
       )}
-      <Pagination
-        totalCount={state.repos.totalCount}
-        updatePage={handleSearch}
-        param={state.query}
-      />
+      {!!state.repos.totalCount && (
+        <Pagination
+          totalCount={state.repos.totalCount}
+          updatePage={handleSearch}
+          param={state.query}
+        />
+      )}
     </div>
   );
 }
