@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Result, Modal } from 'antd';
-import PropTypes from 'prop-types';
 
 import Repo from '../Repo';
 
 import './index.scss';
 import RepoDetails from '../RepoDetails';
+import { AppContext } from '../../providers';
 
 const showCardInGrid = (repo, toggleModal) => (
   <Repo
@@ -19,7 +19,12 @@ const showCardInGrid = (repo, toggleModal) => (
   />
 );
 
-const Repos = ({ repos, error }) => {
+const Repos = () => {
+  const {
+    state: {
+      repos: { data, error },
+    },
+  } = useContext(AppContext);
   const [modal, setModal] = useState(false);
   const [activeRepo, setActiveRepo] = useState(null);
 
@@ -33,10 +38,10 @@ const Repos = ({ repos, error }) => {
       return <Result title={error} />;
     }
     return (
-      !!repos.length &&
+      !!data.length &&
       !error && (
         <div className="repos-container">
-          {repos.map((e) => showCardInGrid(e, toggleModal))}
+          {data.map((e) => showCardInGrid(e, toggleModal))}
         </div>
       )
     );
@@ -55,21 +60,12 @@ const Repos = ({ repos, error }) => {
             avatar={activeRepo.owner.avatar_url}
             url={activeRepo.html_url}
             watchers={activeRepo.watchers}
+            branch={activeRepo.default_branch}
           />
         )}
       </Modal>
     </div>
   );
-};
-
-Repos.defaultProps = {
-  repos: [],
-  error: '',
-};
-
-Repos.propTypes = {
-  repos: PropTypes.instanceOf(Array),
-  error: PropTypes.string,
 };
 
 export default Repos;

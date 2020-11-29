@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Rate, Avatar } from 'antd';
-import { EyeOutlined } from '@ant-design/icons';
+import { EyeOutlined, ForkOutlined } from '@ant-design/icons';
 
 import githubColors from '../../utils/githubColors';
 import './index.scss';
@@ -16,6 +16,7 @@ const RepoDetails = ({
   avatar,
   url,
   watchers,
+  branch,
 }) => {
   return (
     <Card className="repo" bordered={false}>
@@ -41,6 +42,11 @@ const RepoDetails = ({
           />
           {language}
         </div>
+        <div className="repo-details__watchers">
+          <ForkOutlined />
+          &nbsp;
+          {branch}
+        </div>
       </div>
       <a href={url} target="_blank" rel="noreferrer">
         {url}
@@ -57,6 +63,7 @@ RepoDetails.defaultProps = {
   avatar: '',
   url: '',
   watchers: 0,
+  branch: 'master',
 };
 
 RepoDetails.propTypes = {
@@ -67,6 +74,7 @@ RepoDetails.propTypes = {
   avatar: PropTypes.string,
   url: PropTypes.string,
   watchers: PropTypes.number,
+  branch: PropTypes.string,
 };
 
 export default RepoDetails;

@@ -12,13 +12,9 @@ import 'antd/dist/antd.css';
 import { AppContext } from './providers';
 import { getRepos, getReposSuccess, getReposError } from './actions';
 
-const URL = 'https://api.github.com/search/repositories';
+import apiConfig from './api';
 
-const fetchRepos = async (repo, page) => {
-  const res = await fetch(`${URL}?q=${repo}&page=${page}`);
-  const data = await res.json();
-  return data;
-};
+const { fetchRepos } = apiConfig;
 
 function App() {
   const { state, dispatch } = useContext(AppContext);
@@ -28,7 +24,7 @@ function App() {
     dispatch(getRepos(currentPage, input));
     if (welcome) setWelcome(false);
     try {
-      const response = await fetchRepos(input, currentPage);
+      const response = await fetchRepos({ q: input, page: currentPage });
       if (response.total_count) {
         dispatch(getReposSuccess(response.items, response.total_count));
       } else {
@@ -44,7 +40,10 @@ function App() {
       <Navbar handleSearch={handleSearch} />
       {welcome && <h1 className="welcome">Welcome!</h1>}
       {state.repos.loading ? (
-        <Skeleton paragraph={{ rows: 10 }} />
+        <div className="loader">
+          <Skeleton avatar active />
+          <Skeleton avatar active />
+        </div>
       ) : (
         <Repos repos={state.repos.data} error={state.repos.error} />
       )}
