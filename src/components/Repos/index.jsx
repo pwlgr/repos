@@ -53,6 +53,8 @@ const Repos = ({ repos, error }) => {
             language={activeRepo.language}
             description={activeRepo.description}
             avatar={activeRepo.owner.avatar_url}
+            url={activeRepo.html_url}
+            watchers={activeRepo.watchers}
           />
         )}
       </Modal>

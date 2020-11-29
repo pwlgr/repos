@@ -1,22 +1,35 @@
 .repo {
-  &-language {
+  &-details {
     display: flex;
     align-items: center;
+    justify-content: space-around;
+    &__language {
+      display: flex;
+      align-items: center;
 
-    &__label {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin: 0 5px;
+      &__label {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin: 0 5px;
+      }
+    }
+    &__description {
+      margin-top: 10px;
+    }
+    &__stars {
+      display: flex;
+      align-items: center;
+      ul {
+        margin-right: 3px;
+      }
+    }
+    &__watchers {
+      display: flex;
+      align-items: center;
     }
   }
-  &-description {
-    margin-top: 10px;
-  }
-  &-stars {
-    margin: 5px 0;
-    ul {
-      margin-right: 3px;
-    }
+  a {
+    font-size: 18px;
   }
 }

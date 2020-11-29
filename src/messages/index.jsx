@@ -3,6 +3,7 @@ const messages = {
   error: 'Sorry, something went wrong..',
   noData: 'Sorry, no items were found..',
   search: 'Search',
+  more: 'More',
 };
 
 export default messages;

@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Avatar, Button } from 'antd';
+import messages from '../../messages';
 
 const Repo = ({ name, owner, handleClick, avatar, stars, language }) => {
   return (
-    <List.Item actions={[<Button onClick={handleClick}>More</Button>]}>
+    <List.Item
+      actions={[<Button onClick={handleClick}>{messages.more}</Button>]}>
       <List.Item.Meta
         avatar={<Avatar src={avatar} />}
         title={name}
-        description={`${owner}/${language}/${stars}`}
+        description={`Owner: ${owner}/Language: ${language}/Stars: ${stars}`}
       />
     </List.Item>
   );
