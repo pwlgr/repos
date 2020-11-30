@@ -2,6 +2,8 @@ import React from 'react';
 import { Pagination as AntPagination } from 'antd';
 import PropTypes from 'prop-types';
 
+import './index.scss';
+
 const Pagination = ({ totalCount, param, updatePage }) => {
   const onShowSizeChange = (page) => {
     updatePage(page, param);

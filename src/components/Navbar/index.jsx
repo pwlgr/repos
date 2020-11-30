@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import messages from '../../messages';
 import './index.scss';
 
-const Navbar = React.memo(({ handleSearch }) => {
+const Navbar = ({ handleSearch }) => {
   const [input, setInput] = useState('');
 
   const onInputChange = (e) => {
@@ -27,7 +27,7 @@ const Navbar = React.memo(({ handleSearch }) => {
       </Button>
     </div>
   );
-});
+};
 
 Navbar.defaultProps = {
   handleSearch: () => null,

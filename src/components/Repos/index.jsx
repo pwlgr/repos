@@ -40,7 +40,7 @@ const Repos = () => {
     return (
       !!data.length &&
       !error && (
-        <div className="repos-container">
+        <div className="repos-container" data-testid="repos">
           {data.map((e) => showCardInGrid(e, toggleModal))}
         </div>
       )
@@ -50,7 +50,11 @@ const Repos = () => {
   return (
     <div className="repos">
       {showResult()}
-      <Modal footer={null} visible={modal} onCancel={() => toggleModal(null)}>
+      <Modal
+        footer={null}
+        visible={modal}
+        onCancel={() => toggleModal(null)}
+        data-testid="repos-modal">
         {activeRepo && (
           <RepoDetails
             name={activeRepo.name}

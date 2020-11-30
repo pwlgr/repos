@@ -10,7 +10,7 @@ const Repo = ({ name, owner, handleClick, avatar, stars, language }) => {
       <List.Item.Meta
         avatar={<Avatar src={avatar} />}
         title={name}
-        description={`Owner: ${owner}/Language: ${language}/Stars: ${stars}`}
+        description={`${owner}/ ${language || '-'} / ${stars}`}
       />
     </List.Item>
   );
